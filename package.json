@@ -1,0 +1,56 @@
+{
+  "name": "react-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "repository": "https://github.com/Timothy-Tolley/react-template.git",
+  "author": "timothy-tolley <timothytolley@outlook.com>",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "node server/index.js",
+    "build-dev": "webpack --progress --config ./client/config/webpack.dev.js --mode development",
+    "build-prod": "webpack -p --progress --config ./client/config/webpack.prod.js --mode production",
+    "dev": "nodemon --watch server/index.js & yarn build-dev --watch",
+    "prod": "nodemon --watch server/index.js & yarn build-prod --watch",
+    "test": "jest --watchAll --noStackTrace",
+    "postinstall": "webpack -p --progress --config ./client/config/webpack.prod.js --mode production"
+  },
+  "engines": {
+    "node": "^10.11.0",
+    "yarn": ">= 0.18.0"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "react",
+      "stage-3"
+    ]
+  },
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "body-parser": "^1.18.3",
+    "css-loader": "^1.0.0",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "node": "^10.7.0",
+    "node-sass": "^4.9.2",
+    "nodemon": "^1.18.3",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.3.1",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.21.0",
+    "superagent": "^4.0.0-beta.5",
+    "webpack": "^4.16.3",
+    "webpack-merge": "^4.1.4"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.3",
+    "webpack-cli": "^3.1.0"
+  }
+}
