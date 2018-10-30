@@ -5,14 +5,16 @@ class App extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      marketInfo: false,
+      currencyInfo: false,
+      withdrawalInfo: false,
       coin: '',
       apiKey: '',
       apiSecret: ''
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmitBalance = this.handleSubmitBalance.bind(this)
+    this.handleSubmitWithdrawals = this.handleSubmitWithdrawals.bind(this)
   }
 
   handleChange (e) {
@@ -28,7 +30,7 @@ class App extends React.Component {
     }
   }
 
-  handleSubmit (e) {
+  handleSubmitBalance (e) {
     e.preventDefault()
     let apiKey = this.state.apiKey
     let apiSecret = this.state.apiSecret
@@ -41,7 +43,27 @@ class App extends React.Component {
       .set('Accept', 'application/json')
       .then(res => {
         this.setState({
-          marketInfo: res.body.result
+          currencyInfo: res.body.result
+        })
+      }
+      )
+      .catch(err => {
+        throw err
+      })
+  }
+
+  handleSubmitWithdrawals (e) {
+    e.preventDefault()
+    let apiKey = this.state.apiKey
+    let apiSecret = this.state.apiSecret
+    request
+      .get('/api/v1/bittrex/withdrawal')
+      .set('API-Key', apiKey)
+      .set('API-Secret', apiSecret)
+      .set('Accept', 'application/json')
+      .then(res => {
+        this.setState({
+          withdrawalInfo: res.body.result
         })
       }
       )
@@ -73,12 +95,28 @@ class App extends React.Component {
             <option value="BTC">BITCOIN</option>
           </select>
           <br/>
-          <button className='submitButton' onClick={this.handleSubmit}>
-            SUBMIT
+          <button className='submitButton' onClick={this.handleSubmitBalance}>
+            Get Balance
+          </button>
+          <button className='submitButton' onClick={this.handleSubmitWithdrawals}>
+            Get withdrawal
           </button>
         </form>
-        {this.state.marketInfo && <div>
-          {this.state.marketInfo.Currency}: {this.state.marketInfo.Balance}
+        {this.state.currencyInfo && <div>
+          {this.state.currencyInfo.Currency}: {this.state.currencyInfo.Balance}
+        </div>}
+        {this.state.withdrawalInfo && <div>
+          Withdrawals:
+
+          {this.state.withdrawalInfo.map(withdrawal => {
+            return (
+              <div key={withdrawal.PaymentUuid}>
+                <p> currency : {withdrawal.Currency} </p>
+                <p> Amount: {withdrawal.Amount}</p>
+                <p> Opened: {withdrawal.Opened}</p>
+              </div>
+            )
+          })}
         </div>}
       </div>
     )

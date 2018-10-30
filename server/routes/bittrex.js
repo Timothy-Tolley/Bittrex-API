@@ -29,4 +29,17 @@ router.get('/balance', (req, res) => {
     })
 })
 
+router.get('/withdrawal', (req, res) => {
+  let apiKey = req.get('API-Key')
+  let secret = req.get('API-Secret')
+  let nonce = 'time()'
+  let url = bittrexData.baseUrl + bittrexData.getWithdrawalHistory + '?apikey=' + apiKey + '&nonce=' + nonce
+  request
+    .get(url)
+    .set('apisign', calculateSign(url, secret))
+    .then(resp => {
+      res.json(resp.body)
+    })
+})
+
 module.exports = router
