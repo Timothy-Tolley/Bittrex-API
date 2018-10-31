@@ -1,14 +1,26 @@
 This is a command line application for the bittrex api which doesn't integrate with a front end. 
 
-To Run Each command: 
+To setup: 
+
+git clone
+
+run yarn 
+
+
+
+To Run Each command:  
+
+either 'yarn' or 'npm run' followed by: 
+
 
 ## Withdrawals 
 
+withdrawals YOUR_API_KEY YOUR_API_SECRET 
 
-## Balances 
+## Balance 
 
+balance YOUR_API_KEY YOUR_API_SECRET coin(ETH or BTC)
 
 ## Deposits 
 
-
-## 
+deposits YOUR_API_KEY YOUR_API_SECRET 
